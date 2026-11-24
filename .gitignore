@@ -14,3 +14,5 @@ apps/web/prisma/runtime.prisma
 *.tsbuildinfo
 
 apps/web/public/pdf.worker.min.mjs
+
+apps/web/next-env.d.ts
