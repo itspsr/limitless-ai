@@ -1,0 +1,20 @@
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      SINGLE_USER: ${SINGLE_USER:-false}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      DATABASE_URL: ${DATABASE_URL:-file:/app/apps/web/data/limitless.db}
+      CUSTOM_PROVIDER_HOSTS: ${CUSTOM_PROVIDER_HOSTS:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GOOGLE_PROJECT_ID: ${GOOGLE_PROJECT_ID:-}
+      AUTH_SECRET: ${AUTH_SECRET:-}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET:-}
+    volumes:
+      - workspace:/app/apps/web/data
+    restart: unless-stopped
+volumes:
+  workspace:

@@ -1,0 +1,28 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  CHECKPOINT_DISABLE: "1"
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install --global pnpm@11.25.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:setup
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm --filter @limitless/web exec playwright install --with-deps chromium
+      - run: pnpm --filter @limitless/web exec playwright test
+      - run: docker compose up --build --detach
+      - run: curl --fail --retry 20 --retry-all-errors --retry-delay 2 http://localhost:3000/
+      - if: always()
+        run: docker compose down -v

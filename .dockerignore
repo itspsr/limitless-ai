@@ -1,0 +1,10 @@
+.git
+**/node_modules
+**/.next
+**/data
+**/.env*
+**/dist
+**/*.db*
+**/test-results
+**/*.tsbuildinfo
+**/pdf.worker.min.mjs
