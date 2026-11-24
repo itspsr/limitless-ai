@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "client"
+}
+datasource db {
+  provider = "sqlite"
+  url = env("DATABASE_URL")
+}
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  password String
+  settings String @default("{}")
+  connections Connection[]
+  conversations Conversation[]
+  activities Activity[]
+}
+model Connection {
+  id String @id @default(cuid())
+  owner String
+  user User @relation(fields:[owner],references:[id],onDelete:Cascade)
+  provider String
+  name String
+  base String
+  model String
+  ciphertext String
+  priority Int @default(0)
+  limits String @default("{}")
+  headers String @default("{}")
+  cooldown DateTime?
+  usage Usage[]
+  @@unique([owner,provider])
+}
+model Usage {
+  connectionId String
+  connection Connection @relation(fields:[connectionId],references:[id],onDelete:Cascade)
+  minute DateTime
+  requests Int @default(0)
+  tokens Int @default(0)
+  @@id([connectionId,minute])
+}
+model Conversation {
+  id String @id @default(cuid())
+  owner String
+  user User @relation(fields:[owner],references:[id],onDelete:Cascade)
+  title String
+  updated DateTime @updatedAt
+  messages Message[]
+}
+model Message {
+  id String @id @default(cuid())
+  conversationId String
+  conversation Conversation @relation(fields:[conversationId],references:[id],onDelete:Cascade)
+  role String
+  content String
+  source String?
+  pinned Boolean @default(false)
+  created DateTime @default(now())
+}
+model Activity {
+  id String @id @default(cuid())
+  owner String
+  user User @relation(fields:[owner],references:[id],onDelete:Cascade)
+  kind String
+  detail String
+  created DateTime @default(now())
+  @@index([owner,created])
+}

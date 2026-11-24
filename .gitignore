@@ -7,3 +7,6 @@ dist/
 coverage/
 playwright-report/
 test-results/
+
+apps/web/data/
+apps/web/prisma/runtime.prisma

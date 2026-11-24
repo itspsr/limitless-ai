@@ -2,17 +2,27 @@
   "name": "limitless-ai",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.32.1",
-  "engines": { "node": ">=24" },
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "lint": "eslint packages tests",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "dev": "node scripts/setup.mjs dev",
+    "start": "node scripts/setup.mjs start",
+    "db:setup": "node scripts/setup.mjs"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1", "@types/node": "^24.0.0", "eslint": "^9.39.1",
-    "prettier": "^3.7.0", "typescript": "~5.9.3", "typescript-eslint": "^8.48.0", "vitest": "^4.0.0"
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.0.0",
+    "eslint": "^9.39.1",
+    "prettier": "^3.7.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.48.0",
+    "vitest": "^4.0.0"
   }
 }
