@@ -36,9 +36,10 @@ if (!existsSync(config)) {
     if (error.code !== "EEXIST") throw error;
   }
 }
-const userEnv=path.join(web,"../../.env");
-if(existsSync(userEnv))process.loadEnvFile(userEnv);
-for(const name of ["AUTH_SECRET","ENCRYPTION_SECRET"])if(!process.env[name])delete process.env[name];
+const userEnv = path.join(web, "../../.env");
+if (existsSync(userEnv)) process.loadEnvFile(userEnv);
+for (const name of ["AUTH_SECRET", "ENCRYPTION_SECRET"])
+  if (!process.env[name]) delete process.env[name];
 process.loadEnvFile(config);
 process.env.DATABASE_URL ??= "file:" + path.join(data, "limitless.db");
 if (process.env.DATABASE_URL.startsWith("file:")) {

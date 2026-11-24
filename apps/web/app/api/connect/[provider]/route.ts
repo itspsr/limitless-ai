@@ -29,7 +29,10 @@ export async function GET(
   const url = new URL(req.url),
     jar = await cookies(),
     name = "ll-connect-" + provider;
-  const callback = url.origin + url.pathname;
+  const origin = process.env.AUTH_URL
+    ? new URL(process.env.AUTH_URL).origin
+    : url.origin;
+  const callback = origin + url.pathname;
   try {
     if (!url.searchParams.has("code")) {
       const verifier = randomBytes(32).toString("base64url"),
@@ -115,13 +118,14 @@ export async function GET(
         provider,
         name: entry.name,
         base: entry.base,
+        limits: JSON.stringify(entry.limits),
         model: entry.models[0],
         ciphertext,
         priority: await db().connection.count({ where: { owner: uid } }),
       },
       update: { ciphertext },
     });
-    return Response.redirect(url.origin + "/workspace");
+    return Response.redirect(origin + "/workspace");
   } catch {
     return new Response("Provider login could not be completed.", {
       status: 400,

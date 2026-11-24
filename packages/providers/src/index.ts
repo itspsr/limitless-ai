@@ -55,8 +55,10 @@ export function openAICompatible(
     if (!response.ok) {
       const quota =
         response.status === 429 ||
-        (response.status === 403 &&
-          /quota|rate.limit/i.test(await response.text()));
+        ([400, 402, 403].includes(response.status) &&
+          /quota|resource.exhausted|rate.limit|insufficient.credit|budget.limit/i.test(
+            await response.text(),
+          ));
       throw new ProviderFailure(
         quota
           ? "Provider quota reached"
