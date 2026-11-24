@@ -7,10 +7,10 @@
     "node": ">=24"
   },
   "scripts": {
-    "lint": "eslint packages tests",
-    "typecheck": "tsc --noEmit",
+    "lint": "eslint packages tests apps/web/app apps/web/lib apps/web/auth.ts",
+    "typecheck": "tsc --noEmit && tsc -p apps/web",
     "test": "vitest run",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && pnpm --filter @limitless/web build",
     "format": "prettier --write .",
     "dev": "node scripts/setup.mjs dev",
     "start": "node scripts/setup.mjs start",
