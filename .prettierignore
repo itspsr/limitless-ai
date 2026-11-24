@@ -1,0 +1,10 @@
+node_modules
+dist
+.next
+data
+pnpm-lock.yaml
+test-results
+playwright-report
+public/pdf.worker.min.mjs
+*.tsbuildinfo
+prisma/runtime.prisma

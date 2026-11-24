@@ -1,0 +1,319 @@
+@import "tailwindcss";
+:root {
+  color-scheme: dark;
+  --bg: #090c16;
+  --panel: #121725;
+  --line: #293247;
+  --ink: #f2f4ff;
+  --muted: #a7b2c9;
+  --violet: #ac9bff;
+  --cyan: #6de4dc;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font:
+    15px/1.55 Inter,
+    system-ui,
+    sans-serif;
+}
+a {
+  color: var(--cyan);
+}
+a:hover,
+button:hover {
+  filter: brightness(1.18);
+}
+button,
+summary,
+select {
+  cursor: pointer;
+}
+button,
+.button,
+input,
+textarea,
+select {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 0.55rem 0.85rem;
+  background: #192035;
+  color: var(--ink);
+}
+.button,
+.primary {
+  background: linear-gradient(105deg, #bba9ff, #7ae6df);
+  color: #101324;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+}
+button:disabled {
+  opacity: 0.5;
+}
+textarea,
+input,
+select {
+  width: 100%;
+}
+label {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.7rem 0;
+}
+input[type="checkbox"] {
+  width: auto;
+}
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.12;
+}
+h1 {
+  font-size: clamp(2.3rem, 6vw, 5.6rem);
+  letter-spacing: -0.065em;
+  margin: 0.25em 0;
+}
+h2 {
+  font-size: 1.75rem;
+  letter-spacing: -0.04em;
+  margin: 1em 0 0.65em;
+}
+h3 {
+  font-size: 1.12rem;
+}
+p,
+small,
+figcaption {
+  color: var(--muted);
+}
+p {
+  margin: 0.7em 0;
+}
+em {
+  font-style: normal;
+  color: var(--cyan);
+}
+.site {
+  max-width: 1180px;
+  margin: auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+header,
+footer,
+nav,
+.row,
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+header,
+footer {
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding: 1.25rem 0;
+}
+.brand {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.2rem;
+  text-decoration: none;
+  letter-spacing: -0.045em;
+}
+.brand b {
+  color: var(--violet);
+  font-size: 1.8rem;
+  vertical-align: middle;
+}
+.hero {
+  padding: clamp(3rem, 8vw, 7rem) 0;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero p {
+  max-width: 37rem;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+.diagram,
+article,
+dialog,
+aside,
+.box {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+.diagram {
+  box-shadow: 0 8px 75px #6a55bd25;
+}
+.diagram div {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.diagram span {
+  color: var(--violet);
+}
+.diagram small {
+  margin-left: auto;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 1rem;
+}
+.chips span,
+.chip {
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 0.3rem 0.75rem;
+}
+.site section {
+  margin-bottom: 2rem;
+}
+details {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+footer {
+  margin-top: 3rem;
+}
+.workspace {
+  padding-bottom: 4rem;
+}
+.workspace h1 {
+  font-size: 2.7rem;
+}
+.metric strong {
+  display: block;
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
+}
+.row {
+  gap: 0.5rem;
+}
+.row select {
+  width: auto;
+  max-width: 100%;
+}
+.active {
+  border-color: var(--violet);
+}
+.chatgrid {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(0, 3fr) minmax(160px, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.stack {
+  display: grid;
+  gap: 0.75rem;
+}
+.reply {
+  overflow-wrap: anywhere;
+  margin: 0.8rem 0;
+}
+.reply pre {
+  overflow: auto;
+  background: var(--bg);
+  padding: 0.8rem;
+}
+.reply ul {
+  list-style: disc inside;
+}
+.reply ol {
+  list-style: decimal inside;
+}
+.reply small {
+  display: block;
+}
+.toast {
+  border-left: 3px solid var(--cyan);
+  background: #192737;
+  padding: 0.75rem;
+  margin: 1rem 0;
+}
+.bars {
+  display: flex;
+  align-items: end;
+  height: 6rem;
+  gap: 3px;
+}
+.bars i {
+  flex: 1;
+  background: linear-gradient(var(--cyan), var(--violet));
+  min-height: 2px;
+}
+.ring {
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+  display: grid;
+  place-items: center;
+  margin: 1rem 0;
+}
+.ring span {
+  background: var(--panel);
+  border-radius: 100%;
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+}
+dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(440px, 94vw);
+  max-height: 90dvh;
+  overflow: auto;
+}
+dialog::backdrop {
+  background: #02040bba;
+}
+.skeleton {
+  height: 10rem;
+  background: linear-gradient(110deg, var(--panel), #212a40, var(--panel));
+  border-radius: 16px;
+}
+.login {
+  max-width: 440px;
+  margin: 8vh auto;
+}
+.status {
+  color: var(--cyan);
+}
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .hero,
+  .chatgrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .hero {
+    padding: 2.5rem 0;
+  }
+  nav {
+    gap: 0.65rem;
+  }
+  .chatgrid aside {
+    max-height: 14rem;
+    overflow: auto;
+  }
+}

@@ -12,3 +12,5 @@ apps/web/data/
 apps/web/prisma/runtime.prisma
 
 *.tsbuildinfo
+
+apps/web/public/pdf.worker.min.mjs

@@ -4,13 +4,9 @@
     "name": "Google Gemini",
     "base": "https://generativelanguage.googleapis.com/v1beta/openai",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key", "oauth"
-    ],
+    "auth_type": ["api_key", "oauth"],
     "signup": "https://aistudio.google.com/apikey",
-    "models": [
-      "gemini-2.5-flash"
-    ],
+    "models": ["gemini-2.5-flash"],
     "limits": {
       "rpm": null,
       "rpd": null,
@@ -26,13 +22,9 @@
     "name": "Groq",
     "base": "https://api.groq.com/openai/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key"
-    ],
+    "auth_type": ["api_key"],
     "signup": "https://console.groq.com/keys",
-    "models": [
-      "llama-3.3-70b-versatile"
-    ],
+    "models": ["llama-3.3-70b-versatile"],
     "limits": {
       "rpm": null,
       "rpd": null,
@@ -48,14 +40,9 @@
     "name": "OpenRouter",
     "base": "https://openrouter.ai/api/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key",
-      "oauth"
-    ],
+    "auth_type": ["api_key", "oauth"],
     "signup": "https://openrouter.ai/keys",
-    "models": [
-      "openrouter/free"
-    ],
+    "models": ["openrouter/free"],
     "limits": {
       "rpm": null,
       "rpd": null,
@@ -71,13 +58,9 @@
     "name": "Mistral",
     "base": "https://api.mistral.ai/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key"
-    ],
+    "auth_type": ["api_key"],
     "signup": "https://console.mistral.ai",
-    "models": [
-      "mistral-small-latest"
-    ],
+    "models": ["mistral-small-latest"],
     "limits": {
       "rpm": null,
       "rpd": null,
@@ -93,13 +76,9 @@
     "name": "Cloudflare Workers AI",
     "base": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key"
-    ],
+    "auth_type": ["api_key"],
     "signup": "https://dash.cloudflare.com",
-    "models": [
-      "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
-    ],
+    "models": ["@cf/meta/llama-3.3-70b-instruct-fp8-fast"],
     "limits": {
       "rpm": null,
       "rpd": null,
@@ -115,13 +94,9 @@
     "name": "NVIDIA API Catalog",
     "base": "https://integrate.api.nvidia.com/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key"
-    ],
+    "auth_type": ["api_key"],
     "signup": "https://build.nvidia.com",
-    "models": [
-      "meta/llama-3.3-70b-instruct"
-    ],
+    "models": ["meta/llama-3.3-70b-instruct"],
     "limits": {
       "rpm": null,
       "rpd": null,
@@ -137,57 +112,47 @@
     "name": "Cerebras",
     "base": "https://api.cerebras.ai/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key"
-    ],
+    "auth_type": ["api_key"],
     "signup": "https://cloud.cerebras.ai",
-    "models": [
-      "gpt-oss-120b"
-    ],
+    "models": ["gpt-oss-120b"],
     "limits": {
-      "rpm": null,
+      "rpm": 5,
       "rpd": null,
-      "tokensDay": null,
+      "tokensDay": 1000000,
       "context": null
     },
     "reset_window": "Account-specific",
     "status": "limited",
-    "last_verified": null
+    "last_verified": "2026-11-24",
+    "limits_source": "https://inference-docs.cerebras.ai/support/rate-limits"
   },
   {
     "id": "cohere",
     "name": "Cohere",
     "base": "https://api.cohere.ai/compatibility/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key"
-    ],
+    "auth_type": ["api_key"],
     "signup": "https://dashboard.cohere.com/api-keys",
-    "models": [
-      "command-a-03-2025"
-    ],
+    "models": ["command-a-03-2025"],
     "limits": {
-      "rpm": null,
+      "rpm": 20,
       "rpd": null,
       "tokensDay": null,
       "context": null
     },
     "reset_window": "Account-specific",
     "status": "limited",
-    "last_verified": null
+    "last_verified": "2026-11-24",
+    "limits_source": "https://docs.cohere.com/docs/rate-limits"
   },
   {
     "id": "sambanova",
     "name": "SambaNova",
     "base": "https://api.sambanova.ai/v1",
     "openai_compatible": true,
-    "auth_type": [
-      "api_key"
-    ],
+    "auth_type": ["api_key"],
     "signup": "https://cloud.sambanova.ai",
-    "models": [
-      "Meta-Llama-3.3-70B-Instruct"
-    ],
+    "models": ["Meta-Llama-3.3-70B-Instruct"],
     "limits": {
       "rpm": null,
       "rpd": null,

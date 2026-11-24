@@ -1,11 +1,18 @@
-export type Message = Readonly<{ role: "system" | "user" | "assistant"; content: string }>;
+export type Message = Readonly<{
+  role: "system" | "user" | "assistant";
+  content: string;
+}>;
 export type History = readonly Message[];
 export interface Limits {
   remainingRequests?: number;
   remainingTokens?: number;
   resetAt?: number;
 }
-export interface StreamChunk { text?: string; totalTokens?: number; limits?: Limits }
+export interface StreamChunk {
+  text?: string;
+  totalTokens?: number;
+  limits?: Limits;
+}
 export interface ProviderAdapter {
   chat(history: History, signal: AbortSignal): Promise<string>;
   stream(history: History, signal: AbortSignal): AsyncIterable<StreamChunk>;
@@ -35,25 +42,39 @@ export type Event =
   | { type: "exhausted"; resetAt?: number };
 
 export async function* route(
-  candidates: readonly Candidate[], history: History,
+  candidates: readonly Candidate[],
+  history: History,
   options: {
-    signal: AbortSignal; autoSwitch: boolean; timeoutMs: number;
+    signal: AbortSignal;
+    autoSwitch: boolean;
+    timeoutMs: number;
     cooldown(id: string, until: number): Promise<void>;
   },
 ): AsyncGenerator<Event> {
   let earliest = Infinity;
   let previous: string | undefined;
   let hasDraft = false;
-  for (const candidate of options.autoSwitch ? candidates : candidates.slice(0, 1)) {
+  for (const candidate of options.autoSwitch
+    ? candidates
+    : candidates.slice(0, 1)) {
     options.signal.throwIfAborted();
     if (candidate.availableAt > Date.now()) {
       earliest = Math.min(earliest, candidate.availableAt);
       previous ??= candidate.id;
       continue;
     }
-    if (previous) yield { type: "switch", from: previous, to: candidate.id, replaceDraft: hasDraft };
+    if (previous)
+      yield {
+        type: "switch",
+        from: previous,
+        to: candidate.id,
+        replaceDraft: hasDraft,
+      };
     hasDraft = false;
-    const signal = AbortSignal.any([options.signal, AbortSignal.timeout(options.timeoutMs)]);
+    const signal = AbortSignal.any([
+      options.signal,
+      AbortSignal.timeout(options.timeoutMs),
+    ]);
     try {
       for await (const chunk of candidate.adapter.stream(history, signal)) {
         hasDraft ||= Boolean(chunk.text);
@@ -65,11 +86,17 @@ export async function* route(
       options.signal.throwIfAborted();
       const failure = candidate.adapter.normalizeError(error);
       if (!failure.retryable) throw failure;
-      const until = failure.resetAt && failure.resetAt > Date.now() ? failure.resetAt : Date.now() + 60_000;
+      const until =
+        failure.resetAt && failure.resetAt > Date.now()
+          ? failure.resetAt
+          : Date.now() + 60_000;
       await options.cooldown(candidate.id, until);
       earliest = Math.min(earliest, until);
       previous = candidate.id;
     }
   }
-  yield { type: "exhausted", resetAt: Number.isFinite(earliest) ? earliest : undefined };
+  yield {
+    type: "exhausted",
+    resetAt: Number.isFinite(earliest) ? earliest : undefined,
+  };
 }
