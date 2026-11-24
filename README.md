@@ -1,12 +1,30 @@
+<p align="center"><img src="docs/images/banner.png" width="100%" alt="LimitLess AI — Never hit an AI limit again"></p>
+
 # LimitLess AI
 
-[![License MIT](https://img.shields.io/badge/license-MIT-9d8aff)](LICENSE)
+[![MIT license](docs/images/badges/license.svg)](LICENSE) [![CI status on GitHub Actions](docs/images/badges/ci.svg)](https://github.com/itspsr/limitless-ai/actions/workflows/ci.yml) [![GitHub stars](docs/images/badges/stars.svg)](https://github.com/itspsr/limitless-ai/stargazers) [![Pull requests welcome](docs/images/badges/prs.svg)](CONTRIBUTING.md) [![Self-hostable](docs/images/badges/hosting.svg)](#docker-self-host)
 
-A self-hosted research workspace that keeps a conversation going across AI providers. Connect official API credentials, set a fallback order and see which provider answered each turn. The MIT-licensed app has no subscriptions, analytics or required cloud account. Your provider's own terms and usage charges still apply.
+A self-hosted research workspace that keeps a conversation going across AI providers.
+
+Connect official API credentials, set a fallback order and see which provider answered each turn. The MIT-licensed app has no subscriptions, analytics or required cloud account. Your provider's own terms and usage charges still apply.
 
 ## Demo
 
-Screenshot and GIF placeholder. To try the workspace, connect a provider from the dashboard, open Chat and send a question. To see a repeatable fallback without credentials, run `pnpm test`. The router test simulates a 429 on A and checks that B receives the complete conversation.
+<img src="docs/images/demo.gif" width="960" alt="A coastal research question continues on Cirrus after Aster returns a quota error.">
+
+This 12-second recording uses fictional providers and a simulated HTTP 429. The running app routes the original thread to the second provider.
+
+To try the workspace, connect a provider from the dashboard, open Chat and send a question. To see a repeatable fallback without credentials, run `pnpm test`. The router test simulates a 429 on A and checks that B receives the complete conversation.
+
+## Screenshots
+
+| Provider dashboard | Chat after a switch |
+| --- | --- |
+| [![Dashboard showing daily usage and the active fallback provider](docs/images/dashboard.png)](docs/images/dashboard.png) | [![Research conversation with preserved history and provider attribution](docs/images/chat-autoswitch.png)](docs/images/chat-autoswitch.png) |
+| **Connect a tool** | **Set fallback order** |
+| [![Provider connection dialog with login and API key options](docs/images/connect-tool.png)](docs/images/connect-tool.png) | [![Settings with draggable providers and keyboard priority controls](docs/images/fallback-order.png)](docs/images/fallback-order.png) |
+
+Select a screenshot for full resolution. To regenerate the app captures, install FFmpeg, run the quick-start install command below, then run `pnpm screenshots`. The script starts a separate dev server and seeds a temporary SQLite database.
 
 ## Quick start
 
@@ -70,18 +88,26 @@ OpenRouter uses PKCE and a callback at /api/connect/openrouter. Google stores an
 
 For a Node-compatible host with ephemeral disk (including serverless deployments), provision PostgreSQL, persistent secrets and AUTH_URL. Run `pnpm db:setup` in a writable build environment, then `pnpm build`. For Vercel select Next.js with apps/web as the root, include workspace sources outside the root, and use `cd ../.. && pnpm db:setup && pnpm --filter @limitless/web build` as the build command. For a long-running container use the Dockerfile. Streaming duration, function size, database availability and free-plan allowances depend on the host. Hosted deployment has not been validated.
 
-## Architecture
+## How it works
+
+### Architecture
 
 ```mermaid
 flowchart TD
-  UI["Browser workspace"] --> API["Authenticated Next.js routes"]
-  API --> DB["Prisma and SQLite or PostgreSQL"]
+  User --> UI["Web UI"]
+  UI --> API["Authenticated Next.js routes"]
   API --> Router["Priority router"]
-  Router --> Adapter["Provider adapter"]
-  Adapter --> Providers["Official provider APIs"]
+  API --> Keys["Encrypted key store"]
+  API --> Usage["Usage tracker"]
+  Keys --> DB["SQLite or PostgreSQL via Prisma"]
+  Usage --> DB
+  Router --> Adapter["Provider adapters"]
+  Adapter --> Providers["Gemini, Groq, OpenRouter and others"]
   Router --> Events["SSE events"]
   Events --> UI
 ```
+
+[View the architecture diagram as a PNG](docs/images/architecture.png).
 
 See [architecture](docs/architecture.md) and [adding a provider](docs/adding-a-provider.md).
 

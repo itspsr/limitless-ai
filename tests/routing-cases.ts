@@ -50,7 +50,13 @@ export async function fallback(interrupted: boolean) {
   assert.deepEqual(cooldowns, ["A"]);
   assert.deepEqual(
     events.find((e) => e.type === "switch"),
-    { type: "switch", from: "A", to: "B", replaceDraft: interrupted },
+    {
+      type: "switch",
+      from: "A",
+      to: "B",
+      replaceDraft: interrupted,
+      ...(!interrupted ? { quota: true } : {}),
+    },
   );
   assert.deepEqual(events.at(-1), { type: "done", provider: "B", model: "B" });
 }

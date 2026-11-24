@@ -83,10 +83,12 @@ export default function Chat({
             const name = (key: string) =>
               data.connections.find((c) => c.id === key)?.name;
             M(
-              name(event.from) +
-                " unavailable. Continuing with " +
-                name(event.to) +
-                ". Context preserved.",
+              event.quota
+                ? "Limit reached. Continuing with next provider. Context preserved."
+                : name(event.from) +
+                    " unavailable. Continuing with " +
+                    name(event.to) +
+                    ". Context preserved.",
             );
           }
           if (event.type === "exhausted") {

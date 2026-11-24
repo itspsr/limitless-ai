@@ -222,8 +222,12 @@ export default function Workspace({ single }: { single: boolean }) {
                     </div>
                     <small className="status">
                       {Number(new Date(c.cooldown ?? 0)) > now
-                        ? "Cooling down"
-                        : "Connected"}
+                        ? pct === 100
+                          ? "Limit reached"
+                          : "Cooling down"
+                        : active?.id === c.id
+                          ? "Active"
+                          : "Ready"}
                     </small>
                     <div
                       className="ring"

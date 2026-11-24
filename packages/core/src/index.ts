@@ -36,7 +36,13 @@ export interface Candidate {
   availableAt: number;
 }
 export type Event =
-  | { type: "switch"; from: string; to: string; replaceDraft: boolean }
+  | {
+      type: "switch";
+      from: string;
+      to: string;
+      replaceDraft: boolean;
+      quota?: true;
+    }
   | { type: "chunk"; provider: string; chunk: StreamChunk }
   | { type: "done"; provider: string; model: string }
   | { type: "exhausted"; resetAt?: number };
@@ -54,6 +60,7 @@ export async function* route(
   let earliest = Infinity;
   let previous: string | undefined;
   let hasDraft = false;
+  let quota = false;
   for (const candidate of options.autoSwitch
     ? candidates
     : candidates.slice(0, 1)) {
@@ -69,6 +76,7 @@ export async function* route(
         from: previous,
         to: candidate.id,
         replaceDraft: hasDraft,
+        ...(quota ? { quota: true as const } : {}),
       };
     hasDraft = false;
     const signal = AbortSignal.any([
@@ -92,6 +100,7 @@ export async function* route(
           : Date.now() + 60_000;
       await options.cooldown(candidate.id, until);
       earliest = Math.min(earliest, until);
+      quota = failure.message === "Provider quota reached";
       previous = candidate.id;
     }
   }

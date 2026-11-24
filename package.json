@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "dev": "node scripts/setup.mjs dev",
     "start": "node scripts/setup.mjs start",
-    "db:setup": "node scripts/setup.mjs"
+    "db:setup": "node scripts/setup.mjs",
+    "screenshots": "node scripts/screenshots.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
