@@ -1,10 +1,10 @@
 <p align="center"><img src="docs/images/banner.png" width="100%" alt="LimitLess AI — Never hit an AI limit again"></p>
 
-# LimitLess AI
+# LimitLess AI — self-hosted AI router
 
 [![MIT license](docs/images/badges/license.svg)](LICENSE) [![CI status on GitHub Actions](docs/images/badges/ci.svg)](https://github.com/itspsr/limitless-ai/actions/workflows/ci.yml) [![GitHub stars](docs/images/badges/stars.svg)](https://github.com/itspsr/limitless-ai/stargazers) [![Pull requests welcome](docs/images/badges/prs.svg)](CONTRIBUTING.md) [![Self-hostable](docs/images/badges/hosting.svg)](#docker-self-host)
 
-A self-hosted research workspace that keeps a conversation going across AI providers.
+**LimitLess AI** is a free, open-source AI router and research workspace. Connect Gemini, Groq, OpenRouter, and other providers with your own API keys. When a provider reaches its rate limit, LimitLess AI continues the chat on the next provider with the full conversation history.
 
 Connect official API credentials, set a fallback order and see which provider answered each turn. The MIT-licensed app has no subscriptions, analytics or required cloud account. Your provider's own terms and usage charges still apply.
 
